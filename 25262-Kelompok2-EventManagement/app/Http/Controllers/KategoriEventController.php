@@ -12,7 +12,8 @@ class KategoriEventController extends Controller
      */
     public function index()
     {
-        //
+        $result  = KategoriEvent::all();
+        return view('kategori.index',compact(('result')));
     }
 
     /**
