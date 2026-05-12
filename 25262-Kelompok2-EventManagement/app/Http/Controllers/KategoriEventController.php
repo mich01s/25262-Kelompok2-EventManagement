@@ -13,7 +13,7 @@ class KategoriEventController extends Controller
     public function index()
     {
         $result  = KategoriEvent::all();
-        return view('kategori.index',compact(('result')));
+        return view('admin.kategori.index', compact('result'));
     }
 
     /**
@@ -21,7 +21,7 @@ class KategoriEventController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.kategori.create');
     }
 
     /**
@@ -29,7 +29,13 @@ class KategoriEventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate([
+            'nama_kategori' => 'required|unique:kategori_events',
+        ]);
+
+        KategoriEvent::create($input);
+
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
     /**
