@@ -31,7 +31,39 @@
     <meta name="supported-color-schemes" content="light dark" />
    
     <!--end::Required Plugin(AdminLTE)-->
-    @stack('link')
+    @include('link')
+    {{-- <link rel="preload" href="../css/adminlte.css" as="style" />
+    <!--end::Accessibility Features-->
+
+    <!--begin::Fonts-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+      integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
+      crossorigin="anonymous"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <!--end::Fonts-->
+
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
+      crossorigin="anonymous"
+    />
+    <!--end::Third Party Plugin(OverlayScrollbars)-->
+
+    <!--begin::Third Party Plugin(Bootstrap Icons)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      crossorigin="anonymous"
+    />
+    <!--end::Third Party Plugin(Bootstrap Icons)-->
+
+    <!--begin::Required Plugin(AdminLTE)-->
+    <link rel="stylesheet" href="{{ asset('css/adminlte.css') }}" /> --}}
   </head>
   <!--end::Head-->
   <!--begin::Body-->
@@ -253,7 +285,7 @@
       </nav>
       <!--end::Header-->
       <!--begin::Sidebar-->
-      @include('components.sidebar')
+      {{-- @include('components.sidebar') --}}
       <!--end::Sidebar-->
 
       <!--begin::App Main-->
@@ -347,7 +379,7 @@
 
     <!--end::OverlayScrollbars Configure-->
     <!--end::Script-->
-    @stack('scripts')
+    @include('components.script')
   </body>
   <!--end::Body-->
 </html>

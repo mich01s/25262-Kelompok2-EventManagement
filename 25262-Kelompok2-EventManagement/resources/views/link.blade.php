@@ -1,4 +1,5 @@
-@pushOnce('link')
+@once
+@push('link')
     <link rel="preload" href="../css/adminlte.css" as="style" />
     <!--end::Accessibility Features-->
 
@@ -30,5 +31,6 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
 
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="../css/adminlte.css" />
-@endPushOnce
+    <link rel="stylesheet" href="{{ asset('css/adminlte.css') }}" />
+@endpush
+@endonce
