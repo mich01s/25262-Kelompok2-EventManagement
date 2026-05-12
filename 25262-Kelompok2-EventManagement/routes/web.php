@@ -10,3 +10,4 @@ Route::get('/', function () {
 
 Route::resource('/organizer',ProfilOrganizerController::class);
 Route::resource('/admin/kategori',KategoriEventController::class);
+ 
