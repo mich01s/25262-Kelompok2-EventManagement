@@ -1,5 +1,4 @@
-@once
-@push('link')
+@push('links')
     <link rel="preload" href="../css/adminlte.css" as="style" />
     <!--end::Accessibility Features-->
 
@@ -33,4 +32,4 @@
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{ asset('css/adminlte.css') }}" />
 @endpush
-@endonce
+@stack("links")

@@ -1,5 +1,4 @@
-@once
-    @push('scripts')
+@push('scripts')
           <script
       src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
       crossorigin="anonymous"
@@ -45,10 +44,5 @@
         }
       });
     </script>
-
-
-
-    @endpush
-@endonce
-
-      
+      @endpush
+@stack("scripts")
