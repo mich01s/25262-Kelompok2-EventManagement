@@ -59,15 +59,15 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a href="{{route('organizer.index')}}" class="nav-link">
+                <a href="{{route('profilOrganizer.index')}}" class="nav-link">
                   <i class="nav-icon bi bi-building"></i>
                   <p>organizer</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('kategori.index')}}" class="nav-link">
-                  <i class="nav-icon bi bi-bank2"></i>
-                  <p>Kategori</p>
+                <a href="{{route('Tiket.index')}}" class="nav-link">
+                  <i class="nav-icon bi bi-ticket"></i>
+                  <p>Tiket</p>
                 </a>
               </li>
               

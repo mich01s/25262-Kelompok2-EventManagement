@@ -13,7 +13,7 @@ class ProfilOrganizerController extends Controller
     public function index()
     {
         $result  = ProfilOrganizer::all();
-        return view('ProfilOrganizer.index',compact(('result')));
+        return view('profilOrganizer.index',compact(('result')));
     }
 
     /**

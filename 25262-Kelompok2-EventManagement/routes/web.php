@@ -2,12 +2,16 @@
 
 use App\Http\Controllers\KategoriEventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TiketController;
 use App\Http\Controllers\ProfilOrganizerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('profilOrganizer', [ProfilOrganizerController::class, 'index'])->name('profilOrganizer.index');
+Route::get('Tiket', [TiketController::class, 'index'])->name('Tiket.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
