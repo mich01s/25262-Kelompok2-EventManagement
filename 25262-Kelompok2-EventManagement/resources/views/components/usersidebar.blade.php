@@ -39,27 +39,17 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('organizer.index')}}" class="nav-link">
+                <a href="{{ route('user.organizer.index') }}" class="nav-link">
                   <i class="nav-icon bi bi-building"></i>
                   <p>organizer</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('kategori.index')}}" class="nav-link">
+                <a href="{{route('Tiket.index')}}" class="nav-link">
                   <i class="nav-icon bi bi-bank2"></i>
-                  <p>Kategori</p>
+                  <p>tiket</p>
                 </a>
               </li>
-              <li class="nav-item mt-3 border-top pt-3">
-                <form method="POST" action="{{ route('logout') }}">
-                  @csrf
-                  <button type="submit" class="nav-link w-100 text-start" style="border: none; background: none; padding: 0.5rem 0;">
-                    <i class="nav-icon bi bi-box-arrow-right"></i>
-                    <p>Logout</p>
-                  </button>
-                </form>
-              </li>
-              
           </nav>
         </div>
         <!--end::Sidebar Wrapper-->

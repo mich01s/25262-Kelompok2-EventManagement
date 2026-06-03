@@ -63,7 +63,7 @@
                             <p class="mt-4 text-base leading-relaxed text-white/90">Enter your personal details and start your journey with us.</p>
                         </div>
                         <div class="mt-10">
-                            <a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-full border border-white/80 bg-white/10 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/20">Sign Up</a>
+                            <a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-full border border-white/80 bg-white/10 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/20">Register</a>
                         </div>
                     </div>
                 </div>

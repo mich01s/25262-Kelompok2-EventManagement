@@ -6,6 +6,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\ProfilOrganizerController;
 use App\Http\Controllers\UserDashboardController;
+use App\Models\Event;
+use App\Models\ProfilOrganizer;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,10 +41,11 @@ Route::get('/dashboard', function () {
         return redirect()->route('organizer.dashboard');
     }
     
-    return view('user.index');
+    return redirect()->route('user.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -88,8 +92,25 @@ Route::middleware(['auth', 'event_organizer'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-    Route::get('/user/events', function () {
-        return view('user.events');
+    Route::get('/user/organizer', function () {
+        $organizers = ProfilOrganizer::withCount('events')->get();
+        return view('user.organizer.index', compact('organizers'));
+    })->name('user.organizer.index');
+
+    Route::get('/user/organizer/{organizer}', function (ProfilOrganizer $organizer) {
+        $events = $organizer->events()->orderBy('tanggal_mulai')->get();
+        return view('user.organizer.show', compact('organizer', 'events'));
+    })->name('user.organizer.show');
+
+    Route::get('/user/events/{event_id}', [UserDashboardController::class, 'show'])->name('user.events.show');
+    Route::get('/user/events', function (Request $request) {
+        $q = $request->query('q');
+
+        $events = Event::when($q, function ($query, $q) {
+            return $query->where('nama_event', 'like', "%{$q}%");
+        })->orderBy('tanggal_mulai')->get();
+
+        return view('user.events', compact('events', 'q'));
     })->name('user.events');
     // Tambahkan routes lainnya untuk user biasa di sini
 });

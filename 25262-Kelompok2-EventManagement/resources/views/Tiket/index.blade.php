@@ -1,4 +1,4 @@
-@extends('main')
+@extends('usermain')
 
 @section('title','Tiket')
 
@@ -7,3 +7,5 @@
 @foreach ($result as $item)
 {{$item->tiket_id}} - {{ $item->event_id}} - {{$item->nama_tiket}}<br>
 @endforeach
+
+@endsection
