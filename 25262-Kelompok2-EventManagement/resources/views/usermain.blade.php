@@ -68,10 +68,10 @@
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
         <!--begin::Header-->
-        @include ("components.navbar")
+        @include ("components.usernavbar")
         <!--end::Header-->
         <!--begin::Sidebar-->
-        @include('components.sidebar')
+        @include('components.usersidebar')
         <!--end::Sidebar-->
 
         <!--begin::App Main-->
@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Useeeeeeeeeeeeer</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Fixed Layout</li>
                             </ol>
                         </div>

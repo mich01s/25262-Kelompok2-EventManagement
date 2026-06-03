@@ -11,7 +11,7 @@
             />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">AdminLTE 4</span>
+            <span class="brand-text fw-light">USER</span>
             <!--end::Brand Text-->
           </a>
           <!--end::Brand Link-->
@@ -30,44 +30,24 @@
               id="navigation"
             >
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('user.dashboard')}}" class="nav-link">
                   <i class="nav-icon bi bi-speedometer"></i>
                   <p>
                     Dashboard
-                    <i class="nav-arrow bi bi-chevron-right"></i>
+                    
                   </p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="../index.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Dashboard v1</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../index2.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Dashboard v2</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="../index3.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Dashboard v3</p>
-                    </a>
-                  </li>
-                </ul>
               </li>
               <li class="nav-item">
-                <a href="{{route('profilOrganizer.index')}}" class="nav-link">
+                <a href="{{route('organizer.index')}}" class="nav-link">
                   <i class="nav-icon bi bi-building"></i>
                   <p>organizer</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('Tiket.index')}}" class="nav-link">
-                  <i class="nav-icon bi bi-ticket"></i>
-                  <p>Tiket</p>
+                <a href="{{route('kategori.index')}}" class="nav-link">
+                  <i class="nav-icon bi bi-bank2"></i>
+                  <p>Kategori</p>
                 </a>
               </li>
               <li class="nav-item mt-3 border-top pt-3">

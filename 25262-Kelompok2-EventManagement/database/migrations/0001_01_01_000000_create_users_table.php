@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('user_id');
             $table->string('username');
             $table->string('email')->unique();
-            $table->enum('role', ['admin', 'event_manager', 'user'])->default('user');
+            $table->enum('role', ['admin', 'event_organizer', 'user'])->default('user');
             // $table->string('name');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
