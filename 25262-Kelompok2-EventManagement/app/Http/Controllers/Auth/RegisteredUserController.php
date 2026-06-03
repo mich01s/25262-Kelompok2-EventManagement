@@ -34,13 +34,14 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'in:admin,event_organizer,user'],
         ]);
 
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role'=>'user',
+            'role' => $request->role,
         ]);
 
         event(new Registered($user));
@@ -48,7 +49,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         if ($user->role === 'admin') {
-            return redirect('/admin/kategori');
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'event_organizer') {
+            return redirect()->route('organizer.dashboard');
         }
         return redirect(route('dashboard', absolute: false));
     }

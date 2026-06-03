@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class ProfilOrganizerController extends Controller
 {
     /**
+     * Display organizer dashboard.
+     */
+    public function dashboard()
+    {
+        return view('organizer.dashboard.index');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
