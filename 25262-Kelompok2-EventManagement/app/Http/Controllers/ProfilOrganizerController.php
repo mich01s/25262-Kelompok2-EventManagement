@@ -12,7 +12,7 @@ class ProfilOrganizerController extends Controller
      */
     public function dashboard()
     {
-        return view('organizer.dashboard.index');
+        return view('event_organizer.dashboard.index');
     }
 
     /**
@@ -21,7 +21,7 @@ class ProfilOrganizerController extends Controller
     public function index()
     {
         $result  = ProfilOrganizer::all();
-        return view('profilOrganizer.index',compact(('result')));
+        return view('admin.organizer.index', compact('result'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ProfilOrganizerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.organizer.create');
     }
 
     /**

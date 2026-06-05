@@ -8,6 +8,6 @@ class OrganizerDashboardController extends Controller
 {
     public function index()
     {
-        return view('organizer.dashboard.index');
+        return view('event_organizer.dashboard.index');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\KategoriEventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TiketController;
@@ -84,10 +85,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'event_organizer'])->group(function () {
     Route::get('/organizer/dashboard', [ProfilOrganizerController::class, 'dashboard'])->name('organizer.dashboard');
-    Route::get('/event-organizer/events', function () {
-        return view('event_organizer.events');
-    })->name('event-organizer.events');
-    // Tambahkan routes lainnya untuk event organizer di sini
+    Route::resource('/event', EventController::class)->names([
+        'index' => 'events.index',
+        'create' => 'events.create',
+        'store' => 'events.store',
+        'show' => 'events.show',
+        'edit' => 'events.edit',
+        'update' => 'events.update',
+        'destroy' => 'events.destroy',
+    ]);
+
 });
 
 Route::middleware(['auth'])->group(function () {

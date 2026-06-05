@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProfilOrganizer;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -43,6 +44,13 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
+
+        if ($user->role === 'event_organizer') {
+            ProfilOrganizer::create([
+                'user_id' => $user->user_id,
+                'nama_organizer' => $user->username,
+            ]);
+        }
 
         event(new Registered($user));
 
