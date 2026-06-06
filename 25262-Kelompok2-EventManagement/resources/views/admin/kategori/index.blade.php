@@ -1,4 +1,4 @@
-@extends('main')
+@extends('adminmain')
 
 @section('title','Kategori')
 

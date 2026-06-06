@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProfilOrganizer;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -34,21 +35,31 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'in:admin,event_organizer,user'],
         ]);
 
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role'=>'user',
+            'role' => $request->role,
         ]);
+
+        if ($user->role === 'event_organizer') {
+            ProfilOrganizer::create([
+                'user_id' => $user->user_id,
+                'nama_organizer' => $user->username,
+            ]);
+        }
 
         event(new Registered($user));
 
         Auth::login($user);
 
         if ($user->role === 'admin') {
-            return redirect('/admin/kategori');
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'event_organizer') {
+            return redirect()->route('organizer.dashboard');
         }
         return redirect(route('dashboard', absolute: false));
     }

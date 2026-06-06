@@ -8,12 +8,20 @@ use Illuminate\Http\Request;
 class ProfilOrganizerController extends Controller
 {
     /**
+     * Display organizer dashboard.
+     */
+    public function dashboard()
+    {
+        return view('event_organizer.dashboard.index');
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $result  = ProfilOrganizer::all();
-        return view('ProfilOrganizer.index',compact(('result')));
+        return view('admin.organizer.index', compact('result'));
     }
 
     /**
@@ -21,7 +29,7 @@ class ProfilOrganizerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.organizer.create');
     }
 
     /**
