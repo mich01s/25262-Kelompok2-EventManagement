@@ -12,7 +12,10 @@ class PengisiAcaraController extends Controller
      */
     public function index()
     {
-        //
+        $result = PengisiAcara::withCount('eventPengisiAcara')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+        return view('admin.list pengisi.index', compact('result'));
     }
 
     /**
@@ -20,7 +23,7 @@ class PengisiAcaraController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.list pengisi.create');
     }
 
     /**
@@ -28,7 +31,15 @@ class PengisiAcaraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->validate([
+            'nama_pengisi_acara' => 'required|unique:pengisi_acaras',
+        ], [
+            'nama_pengisi_acara.required' => 'Nama pengisi acara harus diisi',
+            'nama_pengisi_acara.unique' => 'Nama pengisi acara sudah terdaftar',
+        ]);
+
+        PengisiAcara::create($input);
+        return redirect()->route('pengisi.index')->with('success', 'Pengisi acara berhasil ditambahkan.');
     }
 
     /**
@@ -44,7 +55,7 @@ class PengisiAcaraController extends Controller
      */
     public function edit(PengisiAcara $pengisiAcara)
     {
-        //
+        return view('admin.list pengisi.edit', compact('pengisiAcara'));
     }
 
     /**
@@ -52,7 +63,15 @@ class PengisiAcaraController extends Controller
      */
     public function update(Request $request, PengisiAcara $pengisiAcara)
     {
-        //
+        $input = $request->validate([
+            'nama_pengisi_acara' => 'required|unique:pengisi_acaras,nama_pengisi_acara,' . $pengisiAcara->pengisi_acara_id . ',pengisi_acara_id',
+        ], [
+            'nama_pengisi_acara.required' => 'Nama pengisi acara harus diisi',
+            'nama_pengisi_acara.unique' => 'Nama pengisi acara sudah terdaftar',
+        ]);
+
+        $pengisiAcara->update($input);
+        return redirect()->route('pengisi.index')->with('success', 'Pengisi acara berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +79,7 @@ class PengisiAcaraController extends Controller
      */
     public function destroy(PengisiAcara $pengisiAcara)
     {
-        //
+        $pengisiAcara->delete();
+        return redirect()->route('pengisi.index')->with('success', 'Pengisi acara berhasil dihapus.');
     }
 }

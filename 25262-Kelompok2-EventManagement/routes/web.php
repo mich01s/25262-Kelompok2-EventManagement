@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\KategoriEventController;
+use App\Http\Controllers\PengisiAcaraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\ProfilOrganizerController;
@@ -81,9 +83,21 @@ Route::middleware(['auth', 'admin'])->group(function () {
         'update' => 'organizer.update',
         'destroy' => 'organizer.destroy'
     ]);
+
+    Route::get('/admin/users', [AdminUserController::class, 'index'])->name('users.index');
+
+    Route::resource('/admin/pengisi', PengisiAcaraController::class)->names([
+        'index' => 'pengisi.index',
+        'create' => 'pengisi.create',
+        'store' => 'pengisi.store',
+        'show' => 'pengisi.show',
+        'edit' => 'pengisi.edit',
+        'update' => 'pengisi.update',
+        'destroy' => 'pengisi.destroy'
+    ]);
 });
 
-Route::middleware(['auth', 'event_organizer'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/organizer/dashboard', [ProfilOrganizerController::class, 'dashboard'])->name('organizer.dashboard');
     Route::resource('/event', EventController::class)->names([
         'index' => 'events.index',

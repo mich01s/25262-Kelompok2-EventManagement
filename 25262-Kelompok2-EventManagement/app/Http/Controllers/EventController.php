@@ -10,13 +10,46 @@ use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
+    private function viewFor(string $view)
+    {
+        return Auth::user()->role === 'admin'
+            ? "admin.event.{$view}"
+            : "event_organizer.event.{$view}";
+    }
+
+    private function authorizeOrganizerAccess()
+    {
+        $user = Auth::user();
+
+        if (! in_array($user->role, ['admin', 'event_organizer'], true)) {
+            abort(403, 'Anda tidak memiliki izin akses halaman ini.');
+        }
+    }
+
+    private function authorizeEventAccess(Event $event)
+    {
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        return $event->organizer->user_id === $user->user_id;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $events = Event::all();
-        return view('event_organizer.event.index', compact('events'));
+        $this->authorizeOrganizerAccess();
+
+        $user = Auth::user();
+        $events = $user->role === 'admin'
+            ? Event::all()
+            : Event::whereHas('organizer', fn ($query) => $query->where('user_id', $user->user_id))->get();
+
+        return view($this->viewFor('index'), compact('events'));
     }
 
     /**
@@ -24,8 +57,10 @@ class EventController extends Controller
      */
     public function create()
     {
+        $this->authorizeOrganizerAccess();
+
         $categories = KategoriEvent::all();
-        return view('event_organizer.event.create', compact('categories'));
+        return view($this->viewFor('create'), compact('categories'));
     }
 
     /**
@@ -33,6 +68,8 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorizeOrganizerAccess();
+
         $input = $request->validate([
             'kategori_id' => 'required|exists:kategori_events,kategori_id',
             'nama_event' => 'required|string|max:255',
@@ -42,10 +79,6 @@ class EventController extends Controller
         ]);
 
         $user = Auth::user();
-
-        if ($user->role !== 'event_organizer') {
-            abort(403, 'Hanya event organizer yang dapat membuat event.');
-        }
 
         $organizer = ProfilOrganizer::firstOrCreate(
             ['user_id' => $user->user_id],
@@ -77,8 +110,14 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
+        $this->authorizeOrganizerAccess();
+
+        if (! $this->authorizeEventAccess($event)) {
+            abort(403, 'Anda tidak berhak mengubah event ini.');
+        }
+
         $categories = KategoriEvent::all();
-        return view('event_organizer.event.edit', compact('event', 'categories'));
+        return view($this->viewFor('edit'), compact('event', 'categories'));
     }
 
     /**
@@ -86,6 +125,12 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
+        $this->authorizeOrganizerAccess();
+
+        if (! $this->authorizeEventAccess($event)) {
+            abort(403, 'Anda tidak berhak mengubah event ini.');
+        }
+
         $input = $request->validate([
             'kategori_id' => 'required|exists:kategori_events,kategori_id',
             'nama_event' => 'required|string|max:255',
@@ -93,12 +138,6 @@ class EventController extends Controller
             'lokasi' => 'required|string|max:255',
             'google_maps' => 'nullable|string|max:255',
         ]);
-
-        $user = Auth::user();
-
-        if ($event->organizer->user_id !== $user->user_id) {
-            abort(403, 'Anda tidak berhak mengubah event ini.');
-        }
 
         $event->update([
             'kategori_id' => $input['kategori_id'],
@@ -116,6 +155,14 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $this->authorizeOrganizerAccess();
+
+        if (! $this->authorizeEventAccess($event)) {
+            abort(403, 'Anda tidak berhak menghapus event ini.');
+        }
+
+        $event->delete();
+
+        return redirect()->route('events.index')->with('success', 'Event berhasil dihapus.');
     }
 }

@@ -1,4 +1,4 @@
-@extends('organizermain')
+@extends('adminmain')
 @section('title','Event')
 
 @section('content')
@@ -23,14 +23,13 @@
         <td>{{ $event->tanggal }}</td>
         <td>{{ $event->lokasi }}</td>
         <td>
-            <form method="POST" action="{{ route('events.destroy', $event->event_id) }}" class="d-inline">
-                @csrf
-                <input name="_method" type="hidden" value="DELETE">
-                <button type="submit" class="btn btn-xs btn-danger btn-rounded show_confirm"
-                    data-toggle="tooltip" title='Delete'
-                    data-nama='{{ $event->nama_event }}'>Hapus</button>
+<form method="POST" action="{{ route('events.destroy', $event->event_id) }}" class="d-inline">
+                    @csrf
+                    <input name="_method" type="hidden" value="DELETE">
+                    <button type="submit" class="btn btn-xs btn-danger btn-rounded show_confirm"
+                        data-toggle="tooltip" title='Delete'
+                        data-nama='{{ $event->nama_event }}'>Hapus</button>
                 </form>
-                
                 <a href="{{ route('events.edit', $event->event_id) }}" class="btn btn-xs btn-warning btn-rounded">Edit</a>
                 
 
