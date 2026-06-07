@@ -8,7 +8,6 @@
     <tr> 
         <th>No</th>
         <th>Nama Event</th>
-        <th>Deskripsi</th>
         <th>Tanggal</th>
         <th>Lokasi</th>
         <th>Aksi</th>
@@ -19,8 +18,7 @@
     <tr>
         <td>{{ $key+1 }}</td>
         <td>{{ $event->nama_event }}</td>
-        <td>{{ $event->deskripsi }}</td>
-        <td>{{ $event->tanggal }}</td>
+        <td>{{ $event->tanggal_mulai }}</td>
         <td>{{ $event->lokasi }}</td>
         <td>
             <form method="POST" action="{{ route('events.destroy', $event->event_id) }}" class="d-inline">

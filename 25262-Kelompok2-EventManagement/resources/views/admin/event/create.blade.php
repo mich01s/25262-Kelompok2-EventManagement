@@ -35,7 +35,13 @@
 
     <div class="mb-3">
         <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
-        <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}">
+        <input type="text"
+               class="form-control flatpickr-date"
+               id="tanggal_mulai"
+               name="tanggal_mulai"
+               value="{{ old('tanggal_mulai', date('Y-m-d')) }}"
+               placeholder="YYYY-MM-DD"
+               autocomplete="off">
         @error('tanggal_mulai')
             <div class="text-danger">{{ $message }}</div>
         @enderror
@@ -60,4 +66,5 @@
     <button type="submit" class="btn btn-primary mt-2">Submit</button>
 
 </form>
+
 @endsection

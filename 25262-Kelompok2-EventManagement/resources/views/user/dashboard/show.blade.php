@@ -58,14 +58,25 @@
                     <hr>
 
                     <!-- Google Maps -->
+                    @php
+                        $googleMapsUrl = $event->google_maps;
+                        $isEmbedUrl = $googleMapsUrl && str_contains($googleMapsUrl, '/maps/embed');
+                    @endphp
                     <div class="mb-4">
                         <h5>Lokasi pada Peta</h5>
-                        @if($event->google_maps)
-                            <div class="ratio ratio-16x9 mb-3">
-                                <iframe src="{{ $event->google_maps }}" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
+                        @if($googleMapsUrl)
+                            @if($isEmbedUrl)
+                                <div class="ratio ratio-16x9 mb-3">
+                                    <iframe src="{{ $googleMapsUrl }}" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                </div>
+                            @else
+                                <div class="alert alert-info">
+                                    Link Google Maps disimpan, tapi URL saat ini belum dalam format embed. Klik tombol di bawah untuk membuka peta di tab baru.
+                                </div>
+                            @endif
+
                             <p class="small text-muted">
-                                <a href="{{ $event->google_maps }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <a href="{{ $googleMapsUrl }}" target="_blank" class="btn btn-outline-primary btn-sm">
                                     <i class="bi bi-box-arrow-up-right"></i> Buka di Google Maps
                                 </a>
                             </p>

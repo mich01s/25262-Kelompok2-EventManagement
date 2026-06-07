@@ -28,8 +28,8 @@
 
     <!--end::Required Plugin(AdminLTE)-->
     @include('components.link')
-    {{-- <link rel="preload" href="../css/adminlte.css" as="style" />
-    <!--end::Accessibility Features-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css" />
 
     <!--begin::Fonts-->
     <link
@@ -145,6 +145,30 @@
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
 
     <!--end::OverlayScrollbars Configure-->
+    <!--begin::Flatpickr-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const flatpickrInputs = document.querySelectorAll('.flatpickr-date');
+            if (!flatpickrInputs.length) {
+                return;
+            }
+
+            flatpickr(flatpickrInputs, {
+                dateFormat: 'Y-m-d',
+                altInput: true,
+                altFormat: 'F j, Y',
+                allowInput: true,
+                clickOpens: true,
+                disableMobile: true,
+                minDate: 'today',
+                onReady: function (selectedDates, dateStr, instance) {
+                    instance.calendarContainer.classList.add('dark');
+                }
+            });
+        });
+    </script>
+    <!--end::Flatpickr-->
     <!--end::Script-->
     @include('components.script')
 </body>

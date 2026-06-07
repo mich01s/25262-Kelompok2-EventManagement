@@ -8,7 +8,6 @@
     <tr> 
         <th>No</th>
         <th>Nama Event</th>
-        <th>Deskripsi</th>
         <th>Tanggal</th>
         <th>Lokasi</th>
         <th>Aksi</th>
@@ -19,11 +18,16 @@
     <tr>
         <td>{{ $key+1 }}</td>
         <td>{{ $event->nama_event }}</td>
-        <td>{{ $event->deskripsi }}</td>
-        <td>{{ $event->tanggal }}</td>
-        <td>{{ $event->lokasi }}</td>
+        <td>{{ $event->tanggal_mulai }}</td>
         <td>
-<form method="POST" action="{{ route('events.destroy', $event->event_id) }}" class="d-inline">
+            @if($event->google_maps)
+                <a href="{{ $event->google_maps }}" target="_blank">{{ $event->lokasi }}</a>
+            @else
+                {{ $event->lokasi }}
+            @endif
+        </td>
+        <td>
+                <form method="POST" action="{{ route('events.destroy', $event->event_id) }}" class="d-inline">
                     @csrf
                     <input name="_method" type="hidden" value="DELETE">
                     <button type="submit" class="btn btn-xs btn-danger btn-rounded show_confirm"
