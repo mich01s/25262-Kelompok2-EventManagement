@@ -10,6 +10,7 @@
         <th>Nama Event</th>
         <th>Tanggal</th>
         <th>Lokasi</th>
+        <th>Google Maps</th>
         <th>Aksi</th>
     </tr>
 
@@ -19,11 +20,12 @@
         <td>{{ $key+1 }}</td>
         <td>{{ $event->nama_event }}</td>
         <td>{{ $event->tanggal_mulai }}</td>
+        <td>{{ $event->lokasi }}</td>
         <td>
             @if($event->google_maps)
-                <a href="{{ $event->google_maps }}" target="_blank">{{ $event->lokasi }}</a>
+                <a href="{{ $event->google_maps }}" target="_blank" class="btn btn-sm btn-outline-primary">Lihat</a>
             @else
-                {{ $event->lokasi }}
+                <span class="text-muted">Tidak ada</span>
             @endif
         </td>
         <td>

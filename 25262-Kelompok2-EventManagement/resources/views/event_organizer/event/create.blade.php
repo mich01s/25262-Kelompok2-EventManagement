@@ -35,8 +35,8 @@
 
     <div class="mb-3">
         <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
-        <input type="text"
-               class="form-control flatpickr-date"
+        <input type="date"
+               class="form-control datepicker"
                id="tanggal_mulai"
                name="tanggal_mulai"
                value="{{ old('tanggal_mulai', date('Y-m-d')) }}"
