@@ -123,9 +123,39 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <p class="text-muted small mb-3">Tertarik dengan event ini?</p>
-                    <button class="btn btn-primary w-100 mb-2">
-                        <i class="bi bi-ticket-perforated"></i> Beli Tiket
-                    </button>
+
+                    @if($event->tikets && $event->tikets->count())
+                        @foreach($event->tikets as $tiket)
+                            <div class="mb-3 border rounded p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <strong>{{ $tiket->nama_tiket }}</strong>
+                                        <div class="small text-muted">Harga: Rp {{ number_format($tiket->harga,0,',','.') }}</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="small text-muted">Tersisa: {{ $tiket->jumlah_tiket }}</div>
+                                    </div>
+                                </div>
+
+                                <form action="{{ route('user.tickets.purchase') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="tiket_id" value="{{ $tiket->tiket_id }}">
+
+                                    <div class="mb-2">
+                                        <input type="text" name="nama_peserta" class="form-control form-control-sm" placeholder="Nama peserta" required>
+                                    </div>
+
+                                    <div class="mb-2 d-flex">
+                                        <input type="number" name="jumlah" min="1" max="{{ max(1, $tiket->jumlah_tiket) }}" value="1" class="form-control form-control-sm me-2" style="width:90px;">
+                                        <button class="btn btn-primary btn-sm"> <i class="bi bi-ticket-perforated"></i> Beli</button>
+                                    </div>
+                                </form>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="alert alert-secondary">Tiket belum tersedia untuk event ini.</div>
+                    @endif
+
                     <button class="btn btn-outline-secondary w-100">
                         <i class="bi bi-share"></i> Bagikan
                     </button>

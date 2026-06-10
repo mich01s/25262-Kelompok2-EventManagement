@@ -25,4 +25,9 @@ class Event extends Model
     {
         return $this->belongsTo(KategoriEvent::class, 'kategori_id', 'kategori_id');
     }
+
+    public function tikets()
+    {
+        return $this->hasMany(Tiket::class, 'event_id', 'event_id');
+    }
 }

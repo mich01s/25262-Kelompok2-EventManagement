@@ -45,7 +45,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('Tiket.index')}}" class="nav-link">
+                <a href="{{route('user.tickets.index')}}" class="nav-link">
                   <i class="nav-icon bi bi-bank2"></i>
                   <p>tiket</p>
                 </a>

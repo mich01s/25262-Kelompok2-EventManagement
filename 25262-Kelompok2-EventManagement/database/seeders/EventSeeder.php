@@ -96,7 +96,9 @@ class EventSeeder extends Seeder
 
         foreach ($events as $index => $event) {
             $event['organizer_id'] = $organizers[$index % $organizers->count()]->organizer_id;
-            Event::create($event);
+            Event::firstOrCreate([
+                'nama_event' => $event['nama_event'],
+            ], $event);
         }
     }
 }

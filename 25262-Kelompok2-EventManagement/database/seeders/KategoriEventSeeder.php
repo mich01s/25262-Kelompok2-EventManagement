@@ -25,7 +25,7 @@ class KategoriEventSeeder extends Seeder
         ];
 
         foreach ($kategori as $kat) {
-            KategoriEvent::create(['nama_kategori' => $kat]);
+            KategoriEvent::firstOrCreate(['nama_kategori' => $kat]);
         }
     }
 }

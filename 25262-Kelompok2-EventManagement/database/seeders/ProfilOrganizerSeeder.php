@@ -43,9 +43,17 @@ class ProfilOrganizerSeeder extends Seeder
         ];
 
         foreach ($organizers as $index => $org) {
-            $user = User::create($org);
-            ProfilOrganizer::create([
+            $user = User::firstOrCreate([
+                'email' => $org['email'],
+            ], [
+                'username' => $org['username'],
+                'password' => $org['password'],
+                'role' => $org['role'],
+            ]);
+
+            ProfilOrganizer::firstOrCreate([
                 'user_id' => $user->user_id,
+            ], [
                 'nama_organizer' => $organizerNames[$index],
             ]);
         }

@@ -16,17 +16,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Create test user (regular user)
-        User::create([
-            'username' => 'testuser',
+        User::firstOrCreate([
             'email' => 'user@example.com',
+        ], [
+            'username' => 'testuser',
             'password' => bcrypt('password'),
             'role' => 'user',
         ]);
 
         // Create admin user
-        User::create([
-            'username' => 'admin',
+        User::firstOrCreate([
             'email' => 'admin@example.com',
+        ], [
+            'username' => 'admin',
             'password' => bcrypt('password'),
             'role' => 'admin',
         ]);
@@ -36,6 +38,8 @@ class DatabaseSeeder extends Seeder
             KategoriEventSeeder::class,
             ProfilOrganizerSeeder::class,
             EventSeeder::class,
+            TiketSeeder::class,
+            TransaksiSeeder::class,
         ]);
     }
 }

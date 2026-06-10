@@ -133,6 +133,12 @@ Route::middleware(['auth'])->group(function () {
 
         return view('user.events', compact('events', 'q'));
     })->name('user.events');
+    // User ticket routes
+    Route::get('/user/tickets', [\App\Http\Controllers\TransaksiController::class, 'index'])->name('user.tickets.index');
+    Route::post('/user/tickets/purchase', [\App\Http\Controllers\TransaksiController::class, 'store'])->name('user.tickets.purchase');
+    Route::get('/user/tickets/{transaksi}/pay', [\App\Http\Controllers\TransaksiController::class, 'paymentForm'])->name('user.tickets.pay.form');
+    Route::post('/user/tickets/{transaksi}/pay', [\App\Http\Controllers\TransaksiController::class, 'pay'])->name('user.tickets.pay');
+    Route::delete('/user/tickets/{transaksi}', [\App\Http\Controllers\TransaksiController::class, 'destroy'])->name('user.tickets.cancel');
     // Tambahkan routes lainnya untuk user biasa di sini
 });
 

@@ -15,7 +15,7 @@ class UserDashboardController extends Controller
 
     public function show($event_id)
     {
-        $event = Event::findOrFail($event_id);
+        $event = Event::with(['tikets', 'organizer', 'kategori'])->findOrFail($event_id);
         return view('user.dashboard.show', compact('event'));
     }
 }
