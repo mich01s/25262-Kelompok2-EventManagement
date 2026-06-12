@@ -10,6 +10,8 @@
         <th>Nama Event</th>
         <th>Tanggal</th>
         <th>Lokasi</th>
+        <th>Google Maps</th>
+        <th>Foto</th>
         <th>Aksi</th>
     </tr>
 
@@ -20,7 +22,15 @@
         <td>{{ $event->nama_event }}</td>
         <td>{{ $event->tanggal_mulai }}</td>
         <td>{{ $event->lokasi }}</td>
+        <td>{{ $event->google_maps }}</td>
         <td>
+            @if ($event->foto)
+                <img src="{{ asset('storage/event_fotos/' . $event->foto) }}" alt="Foto Event" width="100">
+                @else
+                    <p>foto tidak tersedia</p>
+            @endif
+        </td>
+        <td></td>
             <form method="POST" action="{{ route('events.destroy', $event->event_id) }}" class="d-inline">
                 @csrf
                 <input name="_method" type="hidden" value="DELETE">

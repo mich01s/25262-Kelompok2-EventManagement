@@ -76,7 +76,20 @@ class EventController extends Controller
             'tanggal_mulai' => 'required|date',
             'lokasi' => 'required|string|max:255',
             'google_maps' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        // upload file
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $namafoto = time() . '_' . $foto->getClientOriginalName();
+            $foto->storeAs('event_fotos', $namafoto, 'public');
+           
+        } else {
+            $namafoto = null;
+        }
+         $input['foto'] = $namafoto;
+
 
         $user = Auth::user();
 
@@ -92,6 +105,7 @@ class EventController extends Controller
             'tanggal_mulai' => $input['tanggal_mulai'],
             'lokasi' => $input['lokasi'],
             'google_maps' => $input['google_maps'] ?? null,
+            'foto' => $input['foto'] ?? null,   
         ]);
 
         return redirect()->route('events.index')->with('success', 'Event berhasil dibuat.');
@@ -137,7 +151,16 @@ class EventController extends Controller
             'tanggal_mulai' => 'required|date',
             'lokasi' => 'required|string|max:255',
             'google_maps' => 'nullable|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        // upload file
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $namafoto = time() . '_' . $foto->getClientOriginalName();
+            $foto->storeAs('event_fotos', $namafoto, 'public');
+            $input['foto'] = $namafoto;
+        }
 
         $event->update([
             'kategori_id' => $input['kategori_id'],
@@ -145,6 +168,7 @@ class EventController extends Controller
             'tanggal_mulai' => $input['tanggal_mulai'],
             'lokasi' => $input['lokasi'],
             'google_maps' => $input['google_maps'] ?? null,
+            'foto' => $input['foto'] ?? null,
         ]);
 
         return redirect()->route('events.index')->with('success', 'Event berhasil diperbarui.');

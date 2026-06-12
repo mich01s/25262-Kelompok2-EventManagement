@@ -182,8 +182,13 @@
                             <!--end::Menu Body-->
                             <!--begin::Menu Footer-->
                             <li class="user-footer">
-                                <a href="#" class="btn btn-outline-secondary">Profile</a>
-                                <a href="#" class="btn btn-outline-danger float-end">Sign out</a>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-primary">Logout</button>
+                                    </form>
+                                    <a href="{{ route('profile.show') }}" class="btn btn-sm btn-outline-secondary">Lihat</a>
+                                </div>
                             </li>
                             <!--end::Menu Footer-->
                         </ul>

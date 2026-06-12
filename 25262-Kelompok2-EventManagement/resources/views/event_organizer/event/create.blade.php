@@ -63,6 +63,14 @@
         @enderror
     </div>
 
+    <div class="form-group">
+            <label for="">foto</label>
+            <input type="file" name="foto" class="form-control" value="{{ old('foto') }}">
+        </div>
+        @error('foto')
+            <div class="text-danger"> {{ $message }} </div>
+        @enderror
+
     <button type="submit" class="btn btn-primary mt-2">Submit</button>
 
 </form>

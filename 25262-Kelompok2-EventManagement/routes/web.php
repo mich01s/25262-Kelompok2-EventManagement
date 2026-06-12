@@ -109,6 +109,16 @@ Route::middleware(['auth'])->group(function () {
         'destroy' => 'events.destroy',
     ]);
 
+    Route::resource('/organizer/pengisi', PengisiAcaraController::class)->names([
+        'index' => 'organizer.pengisi.index',
+        'create' => 'organizer.pengisi.create',
+        'store' => 'organizer.pengisi.store',
+        'show' => 'organizer.pengisi.show',
+        'edit' => 'organizer.pengisi.edit',
+        'update' => 'organizer.pengisi.update',
+        'destroy' => 'organizer.pengisi.destroy'
+    ]);
+
 });
 
 Route::middleware(['auth'])->group(function () {

@@ -8,10 +8,16 @@ class PengisiAcara extends Model
 {
     protected $primaryKey = 'pengisi_acara_id';
     protected $fillable = [
+        'organizer_id',
         'nama_pengisi_acara',
     ];
     protected $table = 'pengisi_acaras';
     public $timestamps = true;
+
+    public function organizer()
+    {
+        return $this->belongsTo(ProfilOrganizer::class, 'organizer_id', 'organizer_id');
+    }
 
     /**
      * Relasi dengan EventPengisiAcara

@@ -62,6 +62,13 @@
                 <div class="text-danger mt-1">{{ $message }}</div>
             @enderror
         </div>
+        
+        <div class="form-group">
+            <label for="">Foto</label>
+            <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror">
+            @error('foto')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
 
         <button type="submit" class="btn btn-warning mt-2">Update Event</button>
         <a href="{{ route('events.index') }}" class="btn btn-secondary mt-2">Batal</a>
