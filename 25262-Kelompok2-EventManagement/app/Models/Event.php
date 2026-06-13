@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\KategoriEvent;
+use App\Models\PengisiAcara;
+use App\Models\ProfilOrganizer;
+use App\Models\Tiket;
 
 class Event extends Model
 {
@@ -13,7 +17,8 @@ class Event extends Model
         'nama_event',
         'tanggal_mulai',
         'lokasi',
-        'google_maps'
+        'google_maps',
+        'foto'
     ];
 
     public function organizer()
@@ -24,6 +29,11 @@ class Event extends Model
     public function kategori()
     {
         return $this->belongsTo(KategoriEvent::class, 'kategori_id', 'kategori_id');
+    }
+
+    public function pengisis()
+    {
+        return $this->belongsToMany(PengisiAcara::class, 'event_pengisi_acaras', 'event_id', 'pengisi_acara_id');
     }
 
     public function tikets()

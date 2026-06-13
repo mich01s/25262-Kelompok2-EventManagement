@@ -14,14 +14,20 @@
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100 shadow-sm border-0 event-card" style="cursor: pointer; transition: transform 0.2s;">
                     <!-- Event Image/Map Preview -->
-                    <div class="card-img-top bg-light position-relative overflow-hidden" style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        <div class="d-flex align-items-center justify-content-center h-100">
-                            <div class="text-center text-white">
-                                <i class="bi bi-geo-alt" style="font-size: 3rem;"></i>
-                                <p class="mt-2 small">{{ $event->lokasi }}</p>
+                    @if($event->foto)
+                        <div class="card-img-top position-relative overflow-hidden" style="height: 200px; background-color: #f8f9fa;">
+                            <img src="{{ asset('storage/event_fotos/' . $event->foto) }}" alt="{{ $event->nama_event }}" class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
+                    @else
+                        <div class="card-img-top bg-light position-relative overflow-hidden" style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="d-flex align-items-center justify-content-center h-100">
+                                <div class="text-center text-white">
+                                    <i class="bi bi-geo-alt" style="font-size: 3rem;"></i>
+                                    <p class="mt-2 small">{{ $event->lokasi }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="card-body">
                         <!-- Event Title -->

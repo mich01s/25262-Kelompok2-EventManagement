@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="card card-primary m-2 p-3">
-    <form action="{{ route('events.update', $event->event_id) }}" method="POST">
+    <form action="{{ route('events.update', $event->event_id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -21,6 +21,25 @@
             @error('kategori_id')
                 <div class="text-danger mt-1">{{ $message }}</div>
             @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="pengisi_id" class="form-label">Pengisi event</label>
+            <select class="form-control @error('pengisi_id') is-invalid @enderror" id="pengisi_id" name="pengisi_id[]" multiple>
+                @foreach ($pengisis as $pengisi)
+                    <option value="{{ $pengisi->pengisi_acara_id }}" {{ in_array($pengisi->pengisi_acara_id, old('pengisi_id', $event->pengisis->pluck('pengisi_acara_id')->toArray())) ? 'selected' : '' }}>
+                        {{ $pengisi->nama_pengisi_acara }}
+                    </option>
+                @endforeach
+            </select>
+            @error('pengisi_id')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+            @if ($pengisis->isEmpty())
+                <div class="text-warning mt-2">
+                    Belum ada pengisi acara. Silakan buat terlebih dahulu melalui <a href="{{ route('pengisi.create') }}">menu Pengisi Acara</a>.
+                </div>
+            @endif
         </div>
 
         <div class="mb-3">
@@ -59,6 +78,14 @@
                 <input type="text" class="form-control @error('google_maps') is-invalid @enderror" id="google_maps" name="google_maps" value="{{ old('google_maps', $event->google_maps) }}">
             </div>
             @error('google_maps')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+        
+        <div class="form-group">
+            <label for="">Foto</label>
+            <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror">
+            @error('foto')
                 <div class="text-danger mt-1">{{ $message }}</div>
             @enderror
         </div>

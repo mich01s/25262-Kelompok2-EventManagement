@@ -28,7 +28,7 @@
 
     <!--end::Required Plugin(AdminLTE)-->
     @include('components.link')
-    {{-- <link rel="preload" href="../css/adminlte.css" as="style" />
+    <link rel="preload" href="../css/adminlte.css" as="style" />
     <!--end::Accessibility Features-->
 
     <!--begin::Fonts-->
@@ -59,7 +59,7 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
 
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="{{ asset('css/adminlte.css') }}" /> --}}
+    <link rel="stylesheet" href="{{ asset('css/adminlte.css') }}" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\KategoriEvent;
+use App\Models\PengisiAcara;
 use App\Models\ProfilOrganizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,15 @@ class EventController extends Controller
         if (! in_array($user->role, ['admin', 'event_organizer'], true)) {
             abort(403, 'Anda tidak memiliki izin akses halaman ini.');
         }
+    }
+
+    private function getPengisis()
+    {
+        $user = Auth::user();
+
+        return $user->role === 'admin'
+            ? PengisiAcara::all()
+            : PengisiAcara::whereHas('organizer', fn ($query) => $query->where('user_id', $user->user_id))->get();
     }
 
     private function authorizeEventAccess(Event $event)
@@ -60,7 +70,9 @@ class EventController extends Controller
         $this->authorizeOrganizerAccess();
 
         $categories = KategoriEvent::all();
-        return view($this->viewFor('create'), compact('categories'));
+        $pengisis = $this->getPengisis();
+
+        return view($this->viewFor('create'), compact('categories', 'pengisis'));
     }
 
     /**
@@ -72,6 +84,8 @@ class EventController extends Controller
 
         $input = $request->validate([
             'kategori_id' => 'required|exists:kategori_events,kategori_id',
+            'pengisi_id' => 'required|array|min:1',
+            'pengisi_id.*' => 'exists:pengisi_acaras,pengisi_acara_id',
             'nama_event' => 'required|string|max:255',
             'tanggal_mulai' => 'required|date',
             'lokasi' => 'required|string|max:255',
@@ -84,12 +98,11 @@ class EventController extends Controller
             $foto = $request->file('foto');
             $namafoto = time() . '_' . $foto->getClientOriginalName();
             $foto->storeAs('event_fotos', $namafoto, 'public');
-           
         } else {
             $namafoto = null;
         }
-         $input['foto'] = $namafoto;
 
+        $input['foto'] = $namafoto;
 
         $user = Auth::user();
 
@@ -98,15 +111,17 @@ class EventController extends Controller
             ['nama_organizer' => $user->username]
         );
 
-        Event::create([
+        $event = Event::create([
             'organizer_id' => $organizer->organizer_id,
             'kategori_id' => $input['kategori_id'],
             'nama_event' => $input['nama_event'],
             'tanggal_mulai' => $input['tanggal_mulai'],
             'lokasi' => $input['lokasi'],
             'google_maps' => $input['google_maps'] ?? null,
-            'foto' => $input['foto'] ?? null,   
+            'foto' => $input['foto'] ?? null,
         ]);
+
+        $event->pengisis()->sync($input['pengisi_id']);
 
         return redirect()->route('events.index')->with('success', 'Event berhasil dibuat.');
     }
@@ -131,7 +146,9 @@ class EventController extends Controller
         }
 
         $categories = KategoriEvent::all();
-        return view($this->viewFor('edit'), compact('event', 'categories'));
+        $pengisis = $this->getPengisis();
+
+        return view($this->viewFor('edit'), compact('event', 'categories', 'pengisis'));
     }
 
     /**
@@ -147,6 +164,8 @@ class EventController extends Controller
 
         $input = $request->validate([
             'kategori_id' => 'required|exists:kategori_events,kategori_id',
+            'pengisi_id' => 'required|array|min:1',
+            'pengisi_id.*' => 'exists:pengisi_acaras,pengisi_acara_id',
             'nama_event' => 'required|string|max:255',
             'tanggal_mulai' => 'required|date',
             'lokasi' => 'required|string|max:255',
@@ -170,6 +189,8 @@ class EventController extends Controller
             'google_maps' => $input['google_maps'] ?? null,
             'foto' => $input['foto'] ?? null,
         ]);
+
+        $event->pengisis()->sync($input['pengisi_id']);
 
         return redirect()->route('events.index')->with('success', 'Event berhasil diperbarui.');
     }

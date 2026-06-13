@@ -3,7 +3,7 @@
 @section('title', 'Tambah Event')
 
 @section('content')
-<form action="{{ route('events.store') }}" method="POST">
+<form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     @error('organizer')
@@ -24,6 +24,24 @@
             <div class="text-danger">{{ $message }}</div>
         @enderror
     </div>
+    <div class="mb-3">
+        <label for="pengisi_id" class="form-label">Pengisi event</label>
+        <select class="form-control @error('pengisi_id') is-invalid @enderror" id="pengisi_id" name="pengisi_id[]" multiple>
+            @foreach ($pengisis as $pengisi)
+                <option value="{{ $pengisi->pengisi_acara_id }}" {{ in_array($pengisi->pengisi_acara_id, old('pengisi_id', [])) ? 'selected' : '' }}>
+                    {{ $pengisi->nama_pengisi_acara }}
+                </option>
+            @endforeach
+        </select>
+        @error('pengisi_id')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+        @if ($pengisis->isEmpty())
+            <div class="text-warning mt-2">
+                Belum ada pengisi acara. Silakan buat terlebih dahulu melalui <a href="{{ route('pengisi.create') }}">menu Pengisi Acara</a>.
+            </div>
+        @endif
+    </div>
 
     <div class="mb-3">
         <label for="nama_event" class="form-label">Nama Event</label>
@@ -35,8 +53,8 @@
 
     <div class="mb-3">
         <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
-        <input type="text"
-               class="form-control flatpickr-date"
+        <input type="date"
+               class="form-control datepicker"
                id="tanggal_mulai"
                name="tanggal_mulai"
                value="{{ old('tanggal_mulai', date('Y-m-d')) }}"
@@ -63,8 +81,15 @@
         @enderror
     </div>
 
+    <div class="form-group">
+            <label for="">foto</label>
+            <input type="file" name="foto" class="form-control" value="{{ old('foto') }}">
+        </div>
+        @error('foto')
+            <div class="text-danger"> {{ $message }} </div>
+        @enderror
+
     <button type="submit" class="btn btn-primary mt-2">Submit</button>
 
 </form>
-
 @endsection

@@ -3,7 +3,7 @@
 @section('title', 'Tambah Event')
 
 @section('content')
-<form action="{{ route('events.store') }}" method="POST">
+<form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     @error('organizer')
@@ -23,6 +23,24 @@
         @error('kategori_id')
             <div class="text-danger">{{ $message }}</div>
         @enderror
+    </div>
+    <div class="mb-3">
+        <label for="pengisi_id" class="form-label">Pengisi event</label>
+        <select class="form-control @error('pengisi_id') is-invalid @enderror" id="pengisi_id" name="pengisi_id[]" multiple>
+            @foreach ($pengisis as $pengisi)
+                <option value="{{ $pengisi->pengisi_acara_id }}" {{ in_array($pengisi->pengisi_acara_id, old('pengisi_id', [])) ? 'selected' : '' }}>
+                    {{ $pengisi->nama_pengisi_acara }}
+                </option>
+            @endforeach
+        </select>
+        @error('pengisi_id')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+        @if ($pengisis->isEmpty())
+            <div class="text-warning mt-2">
+                Belum ada pengisi acara. Silakan buat terlebih dahulu melalui <a href="{{ route('organizer.pengisi.create') }}">menu Pengisi Acara</a>.
+            </div>
+        @endif
     </div>
 
     <div class="mb-3">

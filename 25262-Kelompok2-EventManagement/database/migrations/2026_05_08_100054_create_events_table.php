@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('tanggal_mulai');
             $table->string('lokasi');
             $table->string('google_maps');
+            $table->string('foto',100)->nullable();
             $table->timestamps();
         });
     }
