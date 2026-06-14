@@ -15,6 +15,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+Route::get('/template', function () {
+    return view('adminmainbaru');
+});
+Route::get('/templatelama', function () {
+    return view('adminmain');
+});
 Route::get('/', function () {
     if (Auth::check()) {
         $user = Auth::user();

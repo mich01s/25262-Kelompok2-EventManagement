@@ -1,4 +1,4 @@
-@extends('adminmain')
+@extends('adminmainbaru')
 
 @section('title', 'Data User')
 

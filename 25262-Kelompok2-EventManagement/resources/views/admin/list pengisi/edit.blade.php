@@ -1,4 +1,4 @@
-@extends('adminmain')
+@extends('adminmainbaru')
 
 @section('title', 'Edit Pengisi Acara')
 
@@ -116,3 +116,4 @@
     }
 </style>
 @endsection
+

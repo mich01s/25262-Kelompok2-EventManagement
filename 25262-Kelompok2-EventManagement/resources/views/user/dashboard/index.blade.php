@@ -1,4 +1,4 @@
-@extends('usermain')
+@extends('usermainbaru')
 
 @section('title','Dashboard')
 
@@ -102,3 +102,4 @@
         }
     </style>
 @endsection
+

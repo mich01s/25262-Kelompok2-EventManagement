@@ -1,4 +1,4 @@
-@extends('adminmain')
+@extends('adminmainbaru')
 
 @section('title','Dashboard')
 
@@ -175,3 +175,4 @@
         });
     </script>
 @endsection
+

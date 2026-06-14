@@ -1,4 +1,4 @@
-@extends('usermain')
+@extends('usermainbaru')
 
 @section('title','Tiket')
 

@@ -1,4 +1,4 @@
-@extends('usermain')
+@extends('usermainbaru')
 
 @section('title', 'Riwayat Tiket')
 
@@ -76,3 +76,4 @@
         </div>
     </div>
 @endsection
+

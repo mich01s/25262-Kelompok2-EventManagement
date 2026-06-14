@@ -1,4 +1,4 @@
-@extends('organizermain')
+@extends('organizermainbaru')
 
 @section('title', 'Tambah Pengisi Acara')
 
@@ -105,3 +105,4 @@
     }
 </style>
 @endsection
+

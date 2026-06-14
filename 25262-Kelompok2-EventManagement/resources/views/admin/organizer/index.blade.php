@@ -1,4 +1,4 @@
-@extends('adminmain')
+@extends('adminmainbaru')
 
 @section('title', 'Organizer')
 
@@ -43,3 +43,4 @@
     </div>
 </div>
 @endsection
+

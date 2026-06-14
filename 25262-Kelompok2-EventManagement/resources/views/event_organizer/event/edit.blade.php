@@ -1,4 +1,4 @@
-@extends('organizermain')
+@extends('organizermainbaru')
 
 @section('title', 'Edit Event')
 

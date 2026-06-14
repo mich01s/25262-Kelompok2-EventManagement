@@ -1,4 +1,4 @@
-@extends('adminmain')
+@extends('adminmainbaru')
 
 @section('title','Kategori')
 
@@ -20,3 +20,4 @@
     </tbody>
 </table>
 @endsection
+

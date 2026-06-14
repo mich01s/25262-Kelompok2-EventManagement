@@ -1,4 +1,4 @@
-@extends('usermain')
+@extends('usermainbaru')
 
 @section('title', 'Bayar Transaksi')
 
@@ -71,3 +71,4 @@
         </div>
     </div>
 @endsection
+

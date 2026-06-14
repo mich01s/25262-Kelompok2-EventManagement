@@ -1,4 +1,4 @@
-@extends('usermain')
+@extends('usermainbaru')
 
 @section('title','Organizer')
 
@@ -39,3 +39,4 @@
         @endforelse
     </div>
 @endsection
+

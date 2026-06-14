@@ -1,4 +1,4 @@
-@extends('usermain')
+@extends('usermainbaru')
 
 @section('title', $event->nama_event)
 
@@ -228,3 +228,4 @@
         </div>
     </div>
 @endsection
+

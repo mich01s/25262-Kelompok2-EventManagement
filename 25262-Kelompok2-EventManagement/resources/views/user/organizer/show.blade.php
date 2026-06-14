@@ -1,4 +1,4 @@
-@extends('usermain')
+@extends('usermainbaru')
 
 @section('title', $organizer->nama_organizer)
 
@@ -51,3 +51,4 @@
         @endforelse
     </div>
 @endsection
+

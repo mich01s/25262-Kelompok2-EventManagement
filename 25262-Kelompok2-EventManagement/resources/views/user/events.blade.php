@@ -1,4 +1,4 @@
-@extends('usermain')
+@extends('usermainbaru')
 
 @section('title','Events')
 
@@ -36,3 +36,4 @@
         </table>
     </div>
 @endsection
+
