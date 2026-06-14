@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\KategoriEvent;
 use App\Models\PengisiAcara;
 use App\Models\ProfilOrganizer;
+use App\Models\Tiket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,8 +57,8 @@ class EventController extends Controller
 
         $user = Auth::user();
         $events = $user->role === 'admin'
-            ? Event::all()
-            : Event::whereHas('organizer', fn ($query) => $query->where('user_id', $user->user_id))->get();
+            ? Event::with('tiket')->get()
+            : Event::with('tiket')->whereHas('organizer', fn ($query) => $query->where('user_id', $user->user_id))->get();
 
         return view($this->viewFor('index'), compact('events'));
     }
@@ -91,6 +92,10 @@ class EventController extends Controller
             'lokasi' => 'required|string|max:255',
             'google_maps' => 'nullable|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // optional single-ticket fields
+            'nama_tiket' => 'nullable|string|max:255',
+            'harga' => 'nullable|integer|min:0',
+            'jumlah_tiket' => 'nullable|integer|min:0',
         ]);
 
         // upload file
@@ -123,6 +128,16 @@ class EventController extends Controller
 
         $event->pengisis()->sync($input['pengisi_id']);
 
+        // If ticket info provided, create single tiket record (event may have multiple tikets elsewhere)
+        if (! empty($input['harga']) || ! empty($input['jumlah_tiket'])) {
+            Tiket::create([
+                'event_id' => $event->event_id,
+                'nama_tiket' => $input['nama_tiket'] ?? 'Reguler',
+                'harga' => $input['harga'] ?? 0,
+                'jumlah_tiket' => $input['jumlah_tiket'] ?? 0,
+            ]);
+        }
+
         return redirect()->route('events.index')->with('success', 'Event berhasil dibuat.');
     }
 
@@ -148,6 +163,9 @@ class EventController extends Controller
         $categories = KategoriEvent::all();
         $pengisis = $this->getPengisis();
 
+        // ensure tiket relation is loaded for the edit form
+        $event->load('tiket');
+
         return view($this->viewFor('edit'), compact('event', 'categories', 'pengisis'));
     }
 
@@ -171,6 +189,10 @@ class EventController extends Controller
             'lokasi' => 'required|string|max:255',
             'google_maps' => 'nullable|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // optional single-ticket fields
+            'nama_tiket' => 'nullable|string|max:255',
+            'harga' => 'nullable|integer|min:0',
+            'jumlah_tiket' => 'nullable|integer|min:0',
         ]);
 
         // upload file
@@ -191,6 +213,23 @@ class EventController extends Controller
         ]);
 
         $event->pengisis()->sync($input['pengisi_id']);
+
+        // handle ticket creation/update/deletion for single-ticket inputs
+        $ticketData = null;
+        if (isset($input['harga']) || isset($input['jumlah_tiket']) || isset($input['nama_tiket'])) {
+            $ticketData = [
+                'nama_tiket' => $input['nama_tiket'] ?? 'Reguler',
+                'harga' => $input['harga'] ?? 0,
+                'jumlah_tiket' => $input['jumlah_tiket'] ?? 0,
+            ];
+        }
+
+        if ($ticketData) {
+            // update existing or create new
+            $event->tiket()->updateOrCreate(['event_id' => $event->event_id], $ticketData);
+        } else {
+            // if no ticket data provided but a tiket exists, leave as-is; to remove ticket, frontend must send explicit flag
+        }
 
         return redirect()->route('events.index')->with('success', 'Event berhasil diperbarui.');
     }

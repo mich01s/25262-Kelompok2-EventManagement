@@ -40,4 +40,10 @@ class Event extends Model
     {
         return $this->hasMany(Tiket::class, 'event_id', 'event_id');
     }
+
+    // Convenience one-to-one relation for views that expect a single ticket
+    public function tiket()
+    {
+        return $this->hasOne(Tiket::class, 'event_id', 'event_id');
+    }
 }

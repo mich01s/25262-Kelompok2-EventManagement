@@ -82,6 +82,39 @@
             @enderror
         </div>
         
+        <hr>
+        <h5>Tiket (opsional)</h5>
+        <p class="small text-muted">Isi jika event berbayar. Kosongkan untuk event gratis.</p>
+        <div class="mb-3">
+            <label for="nama_tiket" class="form-label">Nama Tiket</label>
+            <div class="form-group">
+                <input type="text" class="form-control @error('nama_tiket') is-invalid @enderror" id="nama_tiket" name="nama_tiket" value="{{ old('nama_tiket', optional($event->tiket)->nama_tiket) }}" placeholder="Reguler">
+            </div>
+            @error('nama_tiket')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="harga" class="form-label">Harga (Rp)</label>
+            <div class="form-group">
+                <input type="number" class="form-control @error('harga') is-invalid @enderror" id="harga" name="harga" value="{{ old('harga', optional($event->tiket)->harga) }}" min="0">
+            </div>
+            @error('harga')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="jumlah_tiket" class="form-label">Jumlah Tiket</label>
+            <div class="form-group">
+                <input type="number" class="form-control @error('jumlah_tiket') is-invalid @enderror" id="jumlah_tiket" name="jumlah_tiket" value="{{ old('jumlah_tiket', optional($event->tiket)->jumlah_tiket) }}" min="0">
+            </div>
+            @error('jumlah_tiket')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+        
         <div class="form-group">
             <label for="">Foto</label>
             <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror">

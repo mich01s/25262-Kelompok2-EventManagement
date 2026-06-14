@@ -81,6 +81,33 @@
         @enderror
     </div>
 
+    <hr>
+    <h5>Tiket (opsional)</h5>
+    <p class="small text-muted">Isi jika event berbayar. Kosongkan untuk event gratis.</p>
+    <div class="mb-3">
+        <label for="nama_tiket" class="form-label">Nama Tiket</label>
+        <input type="text" class="form-control" id="nama_tiket" name="nama_tiket" value="{{ old('nama_tiket') }}" placeholder="Reguler">
+        @error('nama_tiket')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="mb-3">
+        <label for="harga" class="form-label">Harga (Rp)</label>
+        <input type="number" class="form-control" id="harga" name="harga" value="{{ old('harga') }}" min="0">
+        @error('harga')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="mb-3">
+        <label for="jumlah_tiket" class="form-label">Jumlah Tiket</label>
+        <input type="number" class="form-control" id="jumlah_tiket" name="jumlah_tiket" value="{{ old('jumlah_tiket') }}" min="0">
+        @error('jumlah_tiket')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+
     <div class="form-group">
             <label for="">foto</label>
             <input type="file" name="foto" class="form-control" value="{{ old('foto') }}">

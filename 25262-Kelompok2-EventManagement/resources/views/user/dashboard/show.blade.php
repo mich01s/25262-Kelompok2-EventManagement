@@ -103,6 +103,19 @@
                         <strong>{{ $event->event_id }}</strong>
                     </div>
 
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Harga:</span>
+                        <strong>
+                            @if($event->tiket)
+                                Rp {{ number_format($event->tiket->harga,0,',','.') }}
+                            @elseif($event->tikets && $event->tikets->count())
+                                Rp {{ number_format($event->tikets->first()->harga,0,',','.') }}+
+                            @else
+                                Gratis
+                            @endif
+                        </strong>
+                    </div>
+
                     @if($event->organizer)
                         <div class="d-flex justify-content-between mb-3">
                             <span>Organizer:</span>
@@ -124,7 +137,34 @@
                 <div class="card-body">
                     <p class="text-muted small mb-3">Tertarik dengan event ini?</p>
 
-                    @if($event->tikets && $event->tikets->count())
+                    @if($event->tiket)
+                        @php $tiket = $event->tiket; @endphp
+                        <div class="mb-3 border rounded p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong>{{ $tiket->nama_tiket }}</strong>
+                                    <div class="small text-muted">Harga: Rp {{ number_format($tiket->harga,0,',','.') }}</div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="small text-muted">Tersisa: {{ $tiket->jumlah_tiket }}</div>
+                                </div>
+                            </div>
+
+                            <form action="{{ route('user.tickets.purchase') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="tiket_id" value="{{ $tiket->tiket_id }}">
+
+                                <div class="mb-2">
+                                    <input type="text" name="nama_peserta" class="form-control form-control-sm" placeholder="Nama peserta" required>
+                                </div>
+
+                                <div class="mb-2 d-flex">
+                                    <input type="number" name="jumlah" min="1" max="{{ max(1, $tiket->jumlah_tiket) }}" value="1" class="form-control form-control-sm me-2" style="width:90px;">
+                                    <button class="btn btn-primary btn-sm"> <i class="bi bi-ticket-perforated"></i> Beli</button>
+                                </div>
+                            </form>
+                        </div>
+                    @elseif($event->tikets && $event->tikets->count())
                         @foreach($event->tikets as $tiket)
                             <div class="mb-3 border rounded p-3">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
