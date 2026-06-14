@@ -193,7 +193,31 @@
                             </div>
                         @endforeach
                     @else
-                        <div class="alert alert-secondary">Tiket belum tersedia untuk event ini.</div>
+                        <div class="mb-3 border rounded p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong>Pendaftaran Gratis</strong>
+                                    <div class="small text-muted">Harga: Gratis</div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="small text-muted">Tidak perlu bayar</div>
+                                </div>
+                            </div>
+
+                            <form action="{{ route('user.tickets.purchase') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="event_id" value="{{ $event->event_id }}">
+                                <input type="hidden" name="jumlah" value="1">
+
+                                <div class="mb-2">
+                                    <input type="text" name="nama_peserta" class="form-control form-control-sm" placeholder="Nama peserta" required>
+                                </div>
+
+                                <button class="btn btn-primary btn-sm w-100">
+                                    <i class="bi bi-pencil-square"></i> Daftar Sekarang
+                                </button>
+                            </form>
+                        </div>
                     @endif
 
                     <button class="btn btn-outline-secondary w-100">

@@ -41,31 +41,49 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'tiket_id' => 'required|integer|exists:tikets,tiket_id',
+            'tiket_id' => 'nullable|integer|exists:tikets,tiket_id|required_without:event_id',
+            'event_id' => 'nullable|integer|exists:events,event_id|required_without:tiket_id',
             'jumlah' => 'required|integer|min:1',
             'nama_peserta' => 'required|string|max:255'
         ]);
 
-        $tiket = Tiket::findOrFail($data['tiket_id']);
-
-        if ($data['jumlah'] > $tiket->jumlah_tiket) {
-            return back()->withErrors(['jumlah' => 'Jumlah tiket tidak tersedia.']);
-        }
-
         $user = Auth::user();
+        $tiket = null;
+        $total = 0;
+        $status = 'pending';
+        $metodePembayaran = 'manual';
+
+        if (!empty($data['tiket_id'])) {
+            $tiket = Tiket::findOrFail($data['tiket_id']);
+
+            if ($data['jumlah'] > $tiket->jumlah_tiket) {
+                return back()->withErrors(['jumlah' => 'Jumlah tiket tidak tersedia.']);
+            }
+
+            $total = $tiket->harga * $data['jumlah'];
+        } else {
+            $event = \App\Models\Event::findOrFail($data['event_id'] ?? 0);
+
+            $tiket = Tiket::firstOrCreate(
+                ['event_id' => $event->event_id, 'nama_tiket' => 'Gratis', 'harga' => 0],
+                ['jumlah_tiket' => 9999]
+            );
+
+            $total = 0;
+            $status = 'paid';
+            $metodePembayaran = 'gratis';
+        }
 
         DB::beginTransaction();
         try {
-            $total = $tiket->harga * $data['jumlah'];
-
             $transaksi = Transaksi::create([
                 'user_id' => $user->user_id,
                 'total_tagihan' => $total,
                 'total_id' => 0,
-                'total_pembayaran' => 0,
+                'total_pembayaran' => $total,
                 'bukti_pembayaran' => '',
-                'metode_pembayaran' => 'manual',
-                'status_pembayaran' => 'pending'
+                'metode_pembayaran' => $metodePembayaran,
+                'status_pembayaran' => $status
             ]);
 
             DetailTransaksi::create([
@@ -78,12 +96,13 @@ class TransaksiController extends Controller
                 'kode_qr' => Str::uuid()
             ]);
 
-            // Kurangi stok tiket
-            $tiket->jumlah_tiket = $tiket->jumlah_tiket - $data['jumlah'];
-            $tiket->save();
+            if ($tiket->harga > 0) {
+                $tiket->jumlah_tiket = $tiket->jumlah_tiket - $data['jumlah'];
+                $tiket->save();
+            }
 
             DB::commit();
-            return redirect()->route('user.tickets.index')->with('success', 'Tiket berhasil dipesan.');
+            return redirect()->route('user.tickets.index')->with('success', 'Pendaftaran berhasil dilakukan.');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withErrors(['error' => 'Terjadi kesalahan saat memproses transaksi.']);
