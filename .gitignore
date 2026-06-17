@@ -1,5 +1,8 @@
 *.log
 .DS_Store
+/node_modules
+/bootstrap/cache/*
+/vendor
 .env
 .env.backup
 .env.production

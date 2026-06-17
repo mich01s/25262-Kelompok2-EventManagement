@@ -94,8 +94,17 @@ class ProfilOrganizerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProfilOrganizer $profilOrganizer)
+    public function destroy(ProfilOrganizer $organizer)
     {
-        //
+        $user = $organizer->user;
+
+        if ($user) {
+            $user->delete();
+        } else {
+            $organizer->delete();
+        }
+
+        return redirect()->route('organizer.index')
+            ->with('success', 'Akun organizer berhasil dihapus.');
     }
 }

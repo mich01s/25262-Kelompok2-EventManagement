@@ -13,7 +13,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Dashboard - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
+    <title> Sistem Event Management</title>
     <!-- CSS files -->
     <link href="{{url('css/tabler.min.css?1674944402')}}" rel="stylesheet"/>
     <link href="{{url('css/tabler-flags.min.css?1674944402')}}" rel="stylesheet"/>
@@ -127,6 +127,23 @@
                   </span>
                   <span class="nav-link-title">
                     Pengisi Acara
+                  </span>
+                </a>
+              </li>
+			  <li class="nav-item">
+                <a class="nav-link" href="{{route('kategori.index')}}" >
+                  <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/microphone -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-book">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+	<path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+	<path d="M3 6l0 13" />
+	<path d="M12 6l0 13" />
+	<path d="M21 6l0 13" />
+</svg>
+                  </span>
+                  <span class="nav-link-title">
+                    kategori Event
                   </span>
                 </a>
               </li>

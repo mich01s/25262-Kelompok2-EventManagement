@@ -131,17 +131,20 @@ class PengisiAcaraController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PengisiAcara $pengisiAcara)
+    public function show(PengisiAcara $pengisi)
     {
+        $pengisiAcara = $pengisi;
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PengisiAcara $pengisiAcara)
+    public function edit(PengisiAcara $pengisi)
     {
         $this->authorizeOrganizerAccess();
+
+        $pengisiAcara = $pengisi;
 
         if (! $this->authorizePengisiAccess($pengisiAcara)) {
             abort(403, 'Anda tidak berhak mengubah pengisi acara ini.');
@@ -153,9 +156,11 @@ class PengisiAcaraController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PengisiAcara $pengisiAcara)
+    public function update(Request $request, PengisiAcara $pengisi)
     {
         $this->authorizeOrganizerAccess();
+
+        $pengisiAcara = $pengisi;
 
         if (! $this->authorizePengisiAccess($pengisiAcara)) {
             abort(403, 'Anda tidak berhak mengubah pengisi acara ini.');
@@ -191,9 +196,11 @@ class PengisiAcaraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PengisiAcara $pengisiAcara)
+    public function destroy(PengisiAcara $pengisi)
     {
         $this->authorizeOrganizerAccess();
+
+        $pengisiAcara = $pengisi;
 
         if (! $this->authorizePengisiAccess($pengisiAcara)) {
             abort(403, 'Anda tidak berhak menghapus pengisi acara ini.');

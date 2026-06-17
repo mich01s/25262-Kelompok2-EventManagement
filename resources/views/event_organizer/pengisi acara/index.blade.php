@@ -90,7 +90,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm" role="group">
-                                                          <a href="{{ route('organizer.pengisi.edit', $item->pengisi_acara_id) }}" 
+                                                          <a href="{{ route('organizer.pengisi.edit', $item) }}" 
                                                class="btn btn-outline-primary" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
@@ -125,7 +125,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" 
                                                                 data-bs-dismiss="modal">Batal</button>
-                                                          <form action="{{ route('organizer.pengisi.destroy', $item->pengisi_acara_id) }}" 
+                                                        <form action="{{ route('organizer.pengisi.destroy', $item) }}" 
                                                               method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('DELETE')
@@ -162,7 +162,7 @@
                 <div class="text-center py-5">
                     <i class="fas fa-inbox" style="font-size: 3rem; color: #ccc;"></i>
                     <p class="text-muted mt-3">Belum ada data pengisi acara</p>
-                    <a href="{{ route('pengisi.create') }}" class="btn btn-primary mt-3">
+                    <a href="{{ route('organizer.pengisi.create') }}" class="btn btn-primary mt-3">
                         <i class="fas fa-plus"></i> Tambah Pengisi Acara Pertama
                     </a>
                 </div>
