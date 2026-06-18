@@ -102,7 +102,7 @@ class EventController extends Controller
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $namafoto = time() . '_' . $foto->getClientOriginalName();
-            $foto->storeAs('event_fotos', $namafoto, 's3');
+            $foto->storeAs('event_fotos', $namafoto, 'public');
         } else {
             $namafoto = null;
         }
@@ -199,7 +199,7 @@ class EventController extends Controller
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $namafoto = time() . '_' . $foto->getClientOriginalName();
-            $foto->storeAs('event_fotos', $namafoto, 's3');
+            $foto->storeAs('event_fotos', $namafoto, 'public');
             $input['foto'] = $namafoto;
         }
 
