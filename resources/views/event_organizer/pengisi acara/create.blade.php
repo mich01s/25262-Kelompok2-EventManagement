@@ -65,6 +65,9 @@
 </div>
 
 <!-- Bootstrap Validation Script -->
+{{-- Fungsinya:
+Mengecek semua field yang memiliki atribut required.
+Jika ada yang kosong, proses submit dibatalkan. --}}
 <script>
     (function() {
         'use strict';
